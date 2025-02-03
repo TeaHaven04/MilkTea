@@ -2,7 +2,7 @@
 // Supabase connection details
 $host = 'aws-0-ap-southeast-1.pooler.supabase.com';  // Host from your connection details
 $port = '6543';  // Port for connection pooling (you can use 5432 if not using pooling)
-$dbname = 'tea_haven';  // Corrected database name
+$dbname = 'postgresql';  // Corrected database name
 $user = 'postgres.kmvjbwggkzpwyfyqkczw';  // Username from your connection details
 $password = 'kyle123';  // Password from your connection details
 
