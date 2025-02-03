@@ -76,18 +76,39 @@
     <div class="register-container">
         <h2>Register</h2>
         <div class="input-group">
+            <input type="text" id="fullName" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
             <input type="email" id="email" placeholder="Email" required>
         </div>
         <div class="input-group">
             <input type="password" id="password" placeholder="Password" required>
         </div>
-        <button onclick="redirectToLogin()" class="btn">Sign Up</button>
+        <div class="input-group">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        </div>
+        <button onclick="validateRegistration()" class="btn">Sign Up</button>
         
         <a href="index.html">Already have an account? Log In</a>
     </div>
 
     <script>
-        function redirectToLogin() {
+        function validateRegistration() {
+            let fullName = document.getElementById("fullName").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!fullName || !email || !password || !confirmPassword) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
             alert("Registration successful! Redirecting to login page...");
             window.location.href = "index.html";
         }
