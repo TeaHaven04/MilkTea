@@ -5,7 +5,7 @@ session_start();
 $servername = "sql101.infinityfree.com";  // Your MySQL hostname (provided by InfinityFree)
 $username = "if0_38233040";              // Your MySQL username (provided by InfinityFree)
 $password = "ddZHoh7v34Lj";              // Your MySQL password (provided by InfinityFree)
-$dbname = "teahaven_db";                 // Your database name (replace with your actual database name)
+$dbname = "teahaven";                 // Your database name (replace with your actual database name)
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
