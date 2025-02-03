@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account - Tea Haven</title>
+    <title>Login - Tea Haven</title>
     <style>
         * {
             margin: 0;
@@ -11,7 +11,7 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-
+        
         body {
             display: flex;
             justify-content: center;
@@ -20,7 +20,7 @@
             background: url('background.jpg') no-repeat center center/cover;
         }
 
-        .register-container {
+        .login-container {
             background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 15px;
@@ -79,40 +79,35 @@
     </style>
 </head>
 <body>
-    <div class="register-container">
-        <h2>Create Account</h2>
-        <div class="input-group">
-            <input type="text" id="full_name" placeholder="Full Name" required>
-        </div>
+    <div class="login-container">
+        <h2>Login</h2>
         <div class="input-group">
             <input type="email" id="email" placeholder="Email" required>
         </div>
         <div class="input-group">
             <input type="password" id="password" placeholder="Password" required>
         </div>
-        <div class="input-group">
-            <input type="password" id="confirm_password" placeholder="Confirm Password" required>
-        </div>
-        <button onclick="registerUser()" class="btn">Sign Up</button>
+        <button onclick="loginUser()" class="btn">Log In</button>
         <p id="error-message"></p>
-        <a href="index.html">Already have an account? Log in</a>
+        <a href="register.html">Create Account</a>
+        <a href="reset_password.html">Forgot your password?</a>
     </div>
 
     <script>
-        function registerUser() {
-            let fullName = document.getElementById("full_name").value;
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
-            let confirmPassword = document.getElementById("confirm_password").value;
+        function loginUser() {
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
             let errorMessage = document.getElementById("error-message");
 
-            if (password !== confirmPassword) {
-                errorMessage.textContent = "Passwords do not match!";
-                return;
-            }
+            console.log("Entered Email:", email);
+            console.log("Entered Password:", password);
 
-            alert("Account created successfully!");
-            window.location.href = "index.html";
+            if (email === "test@example.com" && password === "password123") {
+                alert("Login successful!");
+                window.location.href = "dashboard.html";
+            } else {
+                errorMessage.textContent = "Invalid email or password.";
+            }
         }
     </script>
 </body>
