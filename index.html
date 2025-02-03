@@ -95,9 +95,12 @@
 
     <script>
         function loginUser() {
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
             let errorMessage = document.getElementById("error-message");
+
+            console.log("Entered Email:", email);
+            console.log("Entered Password:", password);
 
             if (email === "test@example.com" && password === "password123") {
                 alert("Login successful!");
