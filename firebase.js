@@ -1,4 +1,3 @@
-// 🔹 Replace with your Firebase project config
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "your-project.firebaseapp.com",
@@ -8,8 +7,5 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
-// 🔹 Initialize Firebase
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// 🔹 Get Firestore database
-const db = firebase.firestore();
