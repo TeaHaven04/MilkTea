@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milk Tea Business Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background: url('background.jpg') no-repeat center center/cover;
+            padding-top: 50px;
+        }
+
+        .dashboard-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 1000px;
+            max-width: 100%;
+        }
+
+        h2 {
+            color: #d81b60;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #ad1457;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #ad1457;
+        }
+
+        .dashboard-link {
+            text-decoration: none;
+            color: #d81b60;
+            font-size: 14px;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .card h4 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Milk Tea Business Dashboard</h2>
+        
+        <!-- Admin Panel -->
+        <div class="section">
+            <h3>Admin Panel</h3>
+            <div class="input-group">
+                <select>
+                    <option>Manage Inventory</option>
+                    <option>Manage Orders</option>
+                    <option>View Reports</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Inventory Management -->
+        <div class="section">
+            <h3>Inventory Management</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>Add New Product</h4>
+                    <div class="input-group">
+                        <input type="text" placeholder="Product Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" placeholder="Quantity" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" placeholder="Price" required>
+                    </div>
+                    <button class="btn">Add Product</button>
+                </div>
+
+                <div class="card">
+                    <h4>Update Inventory</h4>
+                    <div class="input-group">
+                        <select>
+                            <option>Product 1</option>
+                            <option>Product 2</option>
+                            <option>Product 3</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" placeholder="New Quantity" required>
+                    </div>
+                    <button class="btn">Update</button>
+                </div>
+
+                <div class="card">
+                    <h4>View Inventory</h4>
+                    <button class="btn">View All Products</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Management -->
+        <div class="section">
+            <h3>Orders Management</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>View All Orders</h4>
+                    <button class="btn">View Orders</button>
+                </div>
+
+                <div class="card">
+                    <h4>Order Status</h4>
+                    <div class="input-group">
+                        <select>
+                            <option>Order 1</option>
+                            <option>Order 2</option>
+                            <option>Order 3</option>
+                        </select>
+                    </div>
+                    <button class="btn">Update Status</button>
+                </div>
+
+                <div class="card">
+                    <h4>Order Report</h4>
+                    <button class="btn">Generate Report</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Link -->
+        <a href="index.html" class="dashboard-link">Back to Dashboard</a>
+    </div>
+</body>
+</html>
