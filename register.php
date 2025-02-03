@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
 // Check if the form is submitted
@@ -25,8 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize input
     $full_name = mysqli_real_escape_string($conn, $full_name);
     $email = mysqli_real_escape_string($conn, $email);
-    $password = mysqli_real_escape_string($conn, $password);
-    $confirm_password = mysqli_real_escape_string($conn, $confirm_password);
 
     // Basic validation
     if (empty($full_name) || empty($email) || empty($password) || empty($confirm_password)) {
@@ -61,6 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows > 0) {
         echo "Email is already registered!";
+        $stmt->close();
+        $conn->close();
         exit();
     }
     $stmt->close();
@@ -71,8 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $full_name, $email, $hashed_password);
 
     if ($stmt->execute()) {
-        echo "Registration successful! Redirecting to login page...";
-        header("Location: index.html");  // Redirect to the login page after success
+        echo "Registration successful!";
     } else {
         echo "Error: " . $stmt->error;
     }
