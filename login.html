@@ -5,90 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Tea Haven</title>
     <style>
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background-color: #fce4ec;
+        }
+        
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            background: url('background.jpg') no-repeat center center/cover;
         }
+
         .login-container {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 400px;
+            width: 350px;
         }
+
         h2 {
             color: #d81b60;
+            margin-bottom: 15px;
         }
+
         .input-group {
             margin-bottom: 15px;
         }
+
         .input-group input {
-            width: 90%;
+            width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 25px;
-            font-weight: bold;
+            font-size: 16px;
             text-align: center;
-            background-color: #b39ddb;
-            color: white;
         }
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
+
         .btn {
             background-color: #d81b60;
             color: white;
             border: none;
-            padding: 10px;
-            width: 150px;
-            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
+            margin-top: 10px;
         }
+
         .btn:hover {
             background-color: #ad1457;
         }
-        .btn-secondary {
-            background-color: white;
-            color: #d81b60;
-            border: 2px solid #d81b60;
-        }
+
         a {
             text-decoration: none;
             color: #d81b60;
-            font-size: 12px;
-        }
-        .error {
-            color: red;
             font-size: 14px;
+            display: block;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <?php if ($error) echo "<p class='error'>$error</p>"; ?>
-        <form action="login.php" method="POST">
+        <form action="#" method="POST">
             <div class="input-group">
                 <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="input-group">
                 <input type="password" name="password" placeholder="Password" required>
             </div>
-            <div class="btn-group">
-                <a href="register.php"><button type="button" class="btn">CREATE ACCOUNT</button></a>
-                <button type="submit" class="btn btn-secondary" name="login">LOG IN</button>
-            </div>
+            <button type="submit" class="btn">Log In</button>
         </form>
-        <p><a href="reset_password.php">Forgot your password?</a></p>
+        <a href="register.html">Create Account</a>
+        <a href="forgot.html">Forgot your password?</a>
     </div>
 </body>
 </html>
