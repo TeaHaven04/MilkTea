@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize input
     $full_name = mysqli_real_escape_string($conn, $full_name);
     $email = mysqli_real_escape_string($conn, $email);
+    $password = mysqli_real_escape_string($conn, $password);
+    $confirm_password = mysqli_real_escape_string($conn, $confirm_password);
 
     // Basic validation
     if (empty($full_name) || empty($email) || empty($password) || empty($confirm_password)) {
@@ -69,7 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $full_name, $email, $hashed_password);
 
     if ($stmt->execute()) {
-        echo "Registration successful!";
+        echo "Registration successful! Redirecting to login page...";
+        header("Location: index.html");  // Redirect to the login page after success
     } else {
         echo "Error: " . $stmt->error;
     }
