@@ -1,5 +1,4 @@
 <?php
-// Start session
 session_start();
 
 // Database connection details
@@ -16,59 +15,30 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if form is submitted
+// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullName = $_POST['fullName'];
+    $full_name = $_POST['fullName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
 
-    // Validate input fields
-    if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
-        $_SESSION['error_message'] = "Please fill in all fields!";
-        header("Location: register.html");
-        exit();
-    }
+    // Sanitize the input
+    $full_name = mysqli_real_escape_string($conn, $full_name);
+    $email = mysqli_real_escape_string($conn, $email);
+    $password = mysqli_real_escape_string($conn, $password);
 
-    if ($password !== $confirmPassword) {
-        $_SESSION['error_message'] = "Passwords do not match!";
-        header("Location: register.html");
-        exit();
-    }
+    // Hash the password for security
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Check if the email already exists
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Insert the user into the database
+    $sql = "INSERT INTO users (full_name, email, password) VALUES ('$full_name', '$email', '$hashed_password')";
 
-    if ($result->num_rows > 0) {
-        $_SESSION['error_message'] = "Email is already registered!";
-        header("Location: register.html");
-        exit();
-    }
-
-    // Hash the password before storing it
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Insert the new user into the database
-    $sql = "INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $fullName, $email, $hashedPassword);
-
-    if ($stmt->execute()) {
-        $_SESSION['success_message'] = "Registration successful! You can now log in.";
-        header("Location: index.html");
-        exit();
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully!";
     } else {
-        $_SESSION['error_message'] = "Error occurred during registration!";
-        header("Location: register.html");
-        exit();
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
-    // Close the statement and connection
-    $stmt->close();
+    // Close the connection
     $conn->close();
 }
 ?>
