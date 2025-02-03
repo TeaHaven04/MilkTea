@@ -5,7 +5,7 @@ session_start();
 $servername = "sql101.infinityfree.com";
 $username = "if0_38233040";
 $password = "ddZHoh7v34Lj";
-$dbname = "teahaven";
+$dbname = "if0_38233040_teahaven";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
