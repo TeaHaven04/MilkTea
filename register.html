@@ -5,74 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - Tea Haven</title>
     <style>
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background-color: #fce4ec;
+        }
+        
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            background: url('background.jpg') no-repeat center center/cover;
         }
+
         .register-container {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 400px;
+            width: 350px;
         }
+
         h2 {
             color: #d81b60;
+            margin-bottom: 15px;
         }
+
         .input-group {
             margin-bottom: 15px;
-            text-align: left;
         }
+
         .input-group input {
-            width: 90%;
+            width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 25px;
-            font-weight: bold;
+            font-size: 16px;
             text-align: center;
-            background-color: #b39ddb;
-            color: white;
         }
+
         .btn {
             background-color: #d81b60;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
-            border-radius: 10px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
+            margin-top: 10px;
         }
+
         .btn:hover {
             background-color: #ad1457;
         }
+
         a {
             text-decoration: none;
             color: #d81b60;
-            font-size: 12px;
-        }
-        .error {
-            color: red;
             font-size: 14px;
-        }
-        .success {
-            color: green;
-            font-size: 14px;
+            display: block;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="register-container">
         <h2>Create Account</h2>
-        <?php if ($error) echo "<p class='error'>$error</p>"; ?>
-        <?php if ($success) echo "<p class='success'>$success</p>"; ?>
-        <form action="register.php" method="POST">
+        <form action="#" method="POST">
             <div class="input-group">
                 <input type="text" name="full_name" placeholder="Full Name" required>
             </div>
@@ -85,9 +88,9 @@
             <div class="input-group">
                 <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             </div>
-            <button type="submit" class="btn" name="register">SIGN UP</button>
+            <button type="submit" class="btn">Sign Up</button>
         </form>
-        <p>Already have an account? <a href="login.php">Log in</a></p>
+        <a href="login.html">Already have an account? Log in</a>
     </div>
 </body>
 </html>
