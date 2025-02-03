@@ -70,12 +70,6 @@
             display: block;
             margin-top: 10px;
         }
-
-        #error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -87,38 +81,15 @@
         <div class="input-group">
             <input type="password" id="password" placeholder="Password" required>
         </div>
-        <button onclick="loginUser()" class="btn">Log In</button>
-        <p id="error-message"></p>
+        <button onclick="redirectToDashboard()" class="btn">Log In</button>
         
         <a href="register.html">Create Account</a>
         <a href="reset_password.html">Forgot your password?</a>
     </div>
 
     <script>
-        function loginUser() {
-            let email = document.getElementById("email").value.trim();
-            let password = document.getElementById("password").value.trim();
-            let errorMessage = document.getElementById("error-message");
-
-            // Use fetch to send login request to backend
-            fetch("https://your-infinityfree-domain.com/api/login.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: email, password: password }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    alert("Login successful!");
-                    window.location.href = "dashboard.html";
-                } else {
-                    errorMessage.textContent = "Invalid email or password.";
-                }
-            })
-            .catch(error => {
-                errorMessage.textContent = "Server error, please try again.";
-                console.error("Error:", error);
-            });
+        function redirectToDashboard() {
+            window.location.href = "dashboard.html";
         }
     </script>
 </body>
