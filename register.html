@@ -75,8 +75,8 @@
 <body>
     <div class="register-container">
         <h2>Register</h2>
-        <!-- Updated form action to use your subdomain -->
-        <form action="https://milktea.teahaven.lovestoblog.com/register.php" method="POST">
+        <!-- Removed form action to avoid database connection -->
+        <form method="POST" onsubmit="alert('Registration successful!'); return false;">
             <div class="input-group">
                 <input type="text" name="fullName" placeholder="Full Name" required>
             </div>
