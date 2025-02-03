@@ -90,9 +90,8 @@
         <button onclick="loginUser()" class="btn">Log In</button>
         <p id="error-message"></p>
         
-        <!-- Fixed the links -->
-        <a href="register.html" onclick="navigateTo(event, 'register.html')">Create Account</a>
-        <a href="reset_password.html" onclick="navigateTo(event, 'reset_password.html')">Forgot your password?</a>
+        <a href="register.html">Create Account</a>
+        <a href="reset_password.html">Forgot your password?</a>
     </div>
 
     <script>
@@ -101,21 +100,25 @@
             let password = document.getElementById("password").value.trim();
             let errorMessage = document.getElementById("error-message");
 
-            console.log("Entered Email:", email);
-            console.log("Entered Password:", password);
-
-            if (email === "test@example.com" && password === "password123") {
-                alert("Login successful!");
-                window.location.href = "dashboard.html";
-            } else {
-                errorMessage.textContent = "Invalid email or password.";
-            }
-        }
-
-        // Ensure navigation works even if JavaScript is affecting <a> tags
-        function navigateTo(event, url) {
-            event.preventDefault();
-            window.location.href = url;
+            // Use fetch to send login request to backend
+            fetch("https://your-infinityfree-domain.com/api/login.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email, password: password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Login successful!");
+                    window.location.href = "dashboard.html";
+                } else {
+                    errorMessage.textContent = "Invalid email or password.";
+                }
+            })
+            .catch(error => {
+                errorMessage.textContent = "Server error, please try again.";
+                console.error("Error:", error);
+            });
         }
     </script>
 </body>
