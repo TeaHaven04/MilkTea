@@ -75,7 +75,7 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form action="index.php" method="POST">
+        <form id="loginForm">
             <div class="input-group">
                 <input type="email" name="email" placeholder="Email" required>
             </div>
@@ -88,5 +88,21 @@
         <a href="register.html">Create Account</a>
         <a href="reset_password.html">Forgot your password?</a>
     </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            let email = document.querySelector('input[name="email"]').value;
+            let password = document.querySelector('input[name="password"]').value;
+
+            if (email && password) {
+                localStorage.setItem("loggedIn", "true"); // Store login status
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                alert("Please enter email and password!");
+            }
+        });
+    </script>
 </body>
 </html>
