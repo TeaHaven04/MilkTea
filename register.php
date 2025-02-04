@@ -1,54 +1,69 @@
 <?php
-// Supabase connection details
-$host = 'aws-0-ap-southeast-1.pooler.supabase.com';  // Host from your connection details
-$port = '6543';  // Port for connection pooling (you can use 5432 if not using pooling)
-$dbname = 'postgresql';  // Corrected database name
-$user = 'postgres.kmvjbwggkzpwyfyqkczw';  // Username from your connection details
-$password = 'kyle123';  // Password from your connection details
+// Start session (if needed)
+session_start();
 
-// Create connection using mysqli
-$conn = new mysqli($host, $user, $password, $dbname, $port);
+// MySQL Database Connection Details (Update these values)
+$host = "sql206.thsite.top"; // Your MySQL Host
+$username = "thsi_38239187"; // Your MySQL User
+$password = "Your_vPanel_Password"; // Your vPanel Password
+$database = "thsi_38239187_TeaHaven"; // Your Database Name
 
-// Check if connection was successful
+// Create connection
+$conn = new mysqli($host, $username, $password, $database);
+
+// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the form data
-    $fullName = mysqli_real_escape_string($conn, $_POST['fullName']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $confirmPassword = mysqli_real_escape_string($conn, $_POST['confirmPassword']);
+    // Get form data and sanitize
+    $fullName = trim($_POST['fullName']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confirmPassword = trim($_POST['confirmPassword']);
 
-    // Check if passwords match
-    if ($password != $confirmPassword) {
-        echo "Passwords do not match!";
-        exit();
+    // Validate inputs
+    if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
+        die("All fields are required.");
     }
 
-    // Hash the password for secure storage
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Check if the email already exists in the database
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        echo "This email is already registered.";
-        exit();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format.");
     }
 
-    // Insert the new user into the database
-    $sql = "INSERT INTO users (email, password, full_name) VALUES ('$email', '$hashedPassword', '$fullName')";
+    if ($password !== $confirmPassword) {
+        die("Passwords do not match!");
+    }
 
-    if ($conn->query($sql) === TRUE) {
+    // Hash password securely
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+    // Check if email already exists
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    
+    if ($stmt->num_rows > 0) {
+        die("This email is already registered.");
+    }
+    $stmt->close();
+
+    // Insert user into the database
+    $stmt = $conn->prepare("INSERT INTO users (email, password, full_name) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $email, $hashedPassword, $fullName);
+
+    if ($stmt->execute()) {
         echo "Registration successful!";
-        header("Location: index.html");  // Redirect to login page
+        header("Location: index.html"); // Redirect to login page
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        die("Error: " . $stmt->error);
     }
+
+    $stmt->close();
 }
 
 $conn->close();
