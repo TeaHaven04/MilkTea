@@ -17,19 +17,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate inputs
     if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
-        die("<script>alert('❌ All fields are required.'); window.location.href='register.html';</script>");
+        echo "<script>alert('❌ All fields are required.'); window.location.href='register.html';</script>";
+        exit();
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("<script>alert('❌ Invalid email format.'); window.location.href='register.html';</script>");
+        echo "<script>alert('❌ Invalid email format.'); window.location.href='register.html';</script>";
+        exit();
     }
 
     if (strlen($password) < 8) {
-        die("<script>alert('❌ Password must be at least 8 characters long.'); window.location.href='register.html';</script>");
+        echo "<script>alert('❌ Password must be at least 8 characters long.'); window.location.href='register.html';</script>";
+        exit();
     }
 
     if ($password !== $confirmPassword) {
-        die("<script>alert('❌ Passwords do not match!'); window.location.href='register.html';</script>");
+        echo "<script>alert('❌ Passwords do not match!'); window.location.href='register.html';</script>";
+        exit();
     }
 
     // Hash password securely
@@ -37,24 +41,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if email already exists
     $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    if (!$stmt) {
+        die("<script>alert('❌ Database error. Please try again later.'); window.location.href='register.html';</script>");
+    }
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
     
     if ($stmt->num_rows > 0) {
-        die("<script>alert('❌ This email is already registered.'); window.location.href='register.html';</script>");
+        echo "<script>alert('❌ This email is already registered.'); window.location.href='register.html';</script>";
+        exit();
     }
     $stmt->close();
 
     // Insert user into the database
     $stmt = $conn->prepare("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)");
+    if (!$stmt) {
+        die("<script>alert('❌ Database error. Please try again later.'); window.location.href='register.html';</script>");
+    }
     $stmt->bind_param("sss", $fullName, $email, $hashedPassword);
 
     if ($stmt->execute()) {
         echo "<script>alert('✅ Registration successful! Redirecting to login...'); window.location.href='index.html';</script>";
         exit();
     } else {
-        die("<script>alert('❌ Error registering user. Please try again.'); window.location.href='register.html';</script>");
+        echo "<script>alert('❌ Error registering user. Please try again.'); window.location.href='register.html';</script>";
+        exit();
     }
 
     $stmt->close();
