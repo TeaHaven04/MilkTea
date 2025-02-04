@@ -1,59 +1,60 @@
 <?php
-// Supabase connection details
-$host = 'aws-0-ap-southeast-1.pooler.supabase.com';  // Host from your connection details
-$port = '6543';  // Port for connection pooling (you can use 5432 if not using pooling)
-$dbname = 'postgresql;  // Database name
-$user = 'postgres.kmvjbwggkzpwyfyqkczw';  // Username from your connection details
-$password = 'kyle123';  // Password from your connection details
+session_start(); // Start session for user login tracking
 
-// Create connection using mysqli
-$conn = new mysqli($host, $user, $password, $dbname, $port);
+// MySQL Database Connection Details (Update these values)
+$host = "sql206.thsite.top"; // Your MySQL Host
+$username = "thsi_38239187"; // Your MySQL User
+$password = "Your_vPanel_Password"; // Your vPanel Password
+$database = "thsi_38239187_TeaHaven"; // Your Database Name
 
-// Check if connection was successful
+// Create connection
+$conn = new mysqli($host, $username, $password, $database);
+
+// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
-// Function to handle login
+// Secure Login Function
 function login($email, $password) {
     global $conn;
-    
-    // Sanitize inputs to prevent SQL injection
-    $email = mysqli_real_escape_string($conn, $email);
-    $password = mysqli_real_escape_string($conn, $password);
-    
-    // Query to find the user by email
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = $conn->query($sql);
-    
+
+    // Prepare SQL statement to prevent SQL Injection
+    $stmt = $conn->prepare("SELECT id, email, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // If user exists, verify password
     if ($result->num_rows > 0) {
-        // User found, check if password matches
         $row = $result->fetch_assoc();
-        
-        // Verify the password (assuming it's stored hashed)
-        if (password_verify($password, $row['password'])) {
-            // Password is correct, redirect to dashboard
+
+        if (password_verify($password, $row['password'])) { 
+            // Store user info in session
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['email'] = $row['email'];
+
+            // Redirect to dashboard
             header("Location: dashboard.html");
             exit();
         } else {
-            // Password is incorrect
             echo "Invalid email or password.";
         }
     } else {
-        // User not found
         echo "Invalid email or password.";
     }
+
+    $stmt->close();
 }
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get email and password from form
     $email = $_POST['email'];
     $password = $_POST['password'];
-    
-    // Call the login function
+
     login($email, $password);
 }
 
+// Close connection
 $conn->close();
 ?>
