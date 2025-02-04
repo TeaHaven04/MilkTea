@@ -1,11 +1,10 @@
 <?php
-// Start session (if needed)
-session_start();
+session_start(); // Start session for user authentication
 
-// MySQL Database Connection Details (Update these values)
+// Load environment variables (for better security, use an .env file in production)
 $host = "sql206.thsite.top"; // Your MySQL Host
 $username = "thsi_38239187"; // Your MySQL User
-$password = "Your_vPanel_Password"; // Your vPanel Password
+$password = "Jcnicdao45"; // Your vPanel Password
 $database = "thsi_38239187_TeaHaven"; // Your Database Name
 
 // Create connection
@@ -16,25 +15,34 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
+// Function to sanitize input
+function cleanInput($data) {
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data and sanitize
-    $fullName = trim($_POST['fullName']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $confirmPassword = trim($_POST['confirmPassword']);
+    $fullName = cleanInput($_POST['fullName']);
+    $email = cleanInput($_POST['email']);
+    $password = cleanInput($_POST['password']);
+    $confirmPassword = cleanInput($_POST['confirmPassword']);
 
     // Validate inputs
     if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
-        die("All fields are required.");
+        die("❌ All fields are required.");
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Invalid email format.");
+        die("❌ Invalid email format.");
+    }
+
+    if (strlen($password) < 8) {
+        die("❌ Password must be at least 8 characters long.");
     }
 
     if ($password !== $confirmPassword) {
-        die("Passwords do not match!");
+        die("❌ Passwords do not match!");
     }
 
     // Hash password securely
@@ -47,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
     
     if ($stmt->num_rows > 0) {
-        die("This email is already registered.");
+        die("❌ This email is already registered.");
     }
     $stmt->close();
 
@@ -56,11 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $email, $hashedPassword, $fullName);
 
     if ($stmt->execute()) {
-        echo "Registration successful!";
-        header("Location: index.html"); // Redirect to login page
+        echo "✅ Registration successful! Redirecting...";
+        header("refresh:2; url=index.html"); // Redirect to login page after 2 seconds
         exit();
     } else {
-        die("Error: " . $stmt->error);
+        die("❌ Error: " . $stmt->error);
     }
 
     $stmt->close();
