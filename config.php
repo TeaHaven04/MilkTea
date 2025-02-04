@@ -1,15 +1,14 @@
 <?php
-// MySQL Database Connection Details
-$host = "sql206.thsite.top"; // Your MySQL Host
-$username = "thsi_38239187"; // Your MySQL User
-$password = "Jcnicdao45"; // Your vPanel Password
-$database = "thsi_38239187_TeaHaven"; // Your Database Name
+$servername = "sql206.thsite.top"; // Use the hostname from your MySQL Info
+$username = "thsi_38239187"; // Use your MySQL username
+$password = "your_mysql_password"; // Replace with your actual MySQL password
+$dbname = "your_database_name"; // Replace with your actual database name
 
 // Create connection
-$conn = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+    die("❌ Connection failed: " . $conn->connect_error);
 }
 ?>
