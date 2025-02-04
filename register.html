@@ -95,7 +95,7 @@
 
     <script>
         document.getElementById("registerForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form from reloading the page
+            event.preventDefault(); // Prevent form from submitting
 
             let fullName = document.querySelector('input[name="fullName"]').value;
             let email = document.querySelector('input[name="email"]').value;
@@ -112,7 +112,7 @@
                 return;
             }
 
-            // Simulate user registration and store data locally
+            // Store user data in localStorage (for testing purposes)
             localStorage.setItem("registeredUser", JSON.stringify({ fullName, email, password }));
 
             alert("Registration successful! Redirecting to login page...");
