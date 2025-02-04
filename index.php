@@ -1,19 +1,6 @@
 <?php
 session_start(); // Start session for user login tracking
-
-// MySQL Database Connection Details (Update these values)
-$host = "sql206.thsite.top"; // Your MySQL Host
-$username = "thsi_38239187"; // Your MySQL User
-$password = "Jcnicdao45"; // Your vPanel Password
-$database = "thsi_38239187_TeaHaven"; // Your Database Name
-
-// Create connection
-$conn = new mysqli($host, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
+require_once 'config.php'; // Include database connection file
 
 // Secure Login Function
 function login($email, $password) {
@@ -35,13 +22,13 @@ function login($email, $password) {
             $_SESSION['email'] = $row['email'];
 
             // Redirect to dashboard
-            header("Location: dashboard.html");
+            header("Location: dashboard.php");
             exit();
         } else {
-            echo "Invalid email or password.";
+            echo "<script>alert('❌ Invalid email or password.'); window.location.href='index.html';</script>";
         }
     } else {
-        echo "Invalid email or password.";
+        echo "<script>alert('❌ Invalid email or password.'); window.location.href='index.html';</script>";
     }
 
     $stmt->close();
@@ -49,8 +36,8 @@ function login($email, $password) {
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
     login($email, $password);
 }
