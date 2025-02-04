@@ -75,7 +75,7 @@
 <body>
     <div class="register-container">
         <h2>Register</h2>
-        <form action="register.php" method="POST">
+        <form id="registerForm">
             <div class="input-group">
                 <input type="text" name="fullName" placeholder="Full Name" required>
             </div>
@@ -92,5 +92,30 @@
         </form>
         <a href="index.html">Already have an account? Log In</a>
     </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            let fullName = document.querySelector('input[name="fullName"]').value;
+            let email = document.querySelector('input[name="email"]').value;
+            let password = document.querySelector('input[name="password"]').value;
+            let confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+
+            if (!fullName || !email || !password || !confirmPassword) {
+                alert("All fields are required!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Simulate registration process (In a real scenario, you would send this data to a backend)
+            alert("Registration successful! Redirecting to login page...");
+            window.location.href = "index.html"; // Redirect to the login page
+        });
+    </script>
 </body>
 </html>
