@@ -95,8 +95,8 @@
 
     <script>
         document.getElementById("registerForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form submission
-            
+            event.preventDefault(); // Prevent form from reloading the page
+
             let fullName = document.querySelector('input[name="fullName"]').value;
             let email = document.querySelector('input[name="email"]').value;
             let password = document.querySelector('input[name="password"]').value;
@@ -112,9 +112,11 @@
                 return;
             }
 
-            // Simulate registration process (In a real scenario, you would send this data to a backend)
+            // Simulate user registration and store data locally
+            localStorage.setItem("registeredUser", JSON.stringify({ fullName, email, password }));
+
             alert("Registration successful! Redirecting to login page...");
-            window.location.href = "index.html"; // Redirect to the login page
+            window.location.href = "index.html"; // Redirect to login page
         });
     </script>
 </body>
