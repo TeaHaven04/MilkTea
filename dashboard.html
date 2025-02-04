@@ -63,9 +63,21 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <h2>TeaHaven</h2>
+        <h2>TeaHaven Dashboard</h2>
 
-        <a href="index.html">Back to Dashboard</a>
+        <button class="btn" onclick="logout()">Log Out</button>
+        <a href="index.html">Back to Login</a>
     </div>
+
+    <script>
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "index.html"; // Redirect to login if not authenticated
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedIn"); // Clear login status
+            window.location.href = "index.html"; // Redirect to login page
+        }
+    </script>
 </body>
 </html>
